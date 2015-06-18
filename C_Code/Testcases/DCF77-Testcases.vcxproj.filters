@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Quelldateien\Testcases">
+      <UniqueIdentifier>{033b08de-a2f6-4553-b741-cdf0f040d4e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dcf77_bitdecoder-Test.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_bitdecoder.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_bit_decider.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="dcf77_bitdecider-Test.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+    <ClCompile Include="Testsuite.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_phase_detector.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="dcf77_phase_detector-Test.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_pll.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_vco.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="dcf77_vco-Test.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IIR_DF1.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_loop_filter.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="dcf77_loop_filter-Test.c">
+      <Filter>Quelldateien\Testcases</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\dcf77_bit_sequence_fitted.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dcf77_defines.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dcf77_hilbert.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dcf77_includes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dcf77_prototypes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Testsuite.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
