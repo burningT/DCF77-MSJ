@@ -1,6 +1,6 @@
 /* dcf77_main.c
 15.06.15 TB: erstellt
-
+//Github Test
 Entwicklung eines Systems zum Empfang des DCF77 Signals auf einem
 digitalen Signalprozessor. Top-Level-Funktion.
 */
