@@ -1,6 +1,6 @@
 /* dcf77_main.c
 15.06.15 TB: erstellt
-//Github Test
+
 Entwicklung eines Systems zum Empfang des DCF77 Signals auf einem
 digitalen Signalprozessor. Top-Level-Funktion.
 */
@@ -85,6 +85,11 @@ unsigned short i = 0;
 short iTwid[N / RADIX];
 /* Indices für die Neuordnung der inversen FFT*/
 short iFFT[N];
+
+/*Temporäres Array für das Median Filter*/
+float tmp_Med_Filt[MEDLEN];
+/*Zählvariable zum Befüllen des tmp_Med_Filt*/
+short k = 0;
 
 #ifdef HARDWARE
 /* Sorgt dafür, dass die Variablen im SBSRAM gespeichert werden.*/
@@ -214,14 +219,27 @@ int main(void) {
 				//sig_bin = dcf77_bit_decider(sig_bin, sig, 0.8, block_laenge);
 				dcf77_bit_decider(envelope, envelope, 0.8, BUFLEN);
 
-				/////////////////////TODO MedianFIlter einbauen!!!
 				//for k = 1 : length(sig_bin) - len_median
-				for (i = 0; i < BUFLEN - MEDLEN - 1; i++){
-					//	sig_bin(k) = dcf77_MedFilt(sig_bin(k:k + len_median), len_median);
-/**!!!!!!!!!!!!!!!!!!!!!!!!!!EInfügen der Daten ins MEDIAN FIlter WIE machen in C??***/
-///envelope[i] = dcf77_MedFilt(envelope[i:i + MEDLEN], MEDLEN);
-					//end
-				}
+				//for (i = 0; i <= BUFLEN - MEDLEN; i++){
+
+				//	/*Kopiere Werte vor dem sortieren in ein Zwischenarray. Ansonsten wird
+				//	beim nächsten berechneten Geschwindigkeitswert, nicht der älteste,
+				//	sondern der Größte entfernt. Weil das Array sortiert bleibt, da Call
+				//	by Reference.*/
+				//	for (k = 0; k < MEDLEN; k++){
+				//		tmp_Med_Filt[k] = envelope[i+k];
+				//	}
+				//	/*tmp_Med_Filt ist mit MEDLEN Werten gefüllt*/
+				//	envelope[i] = dcf77_medFilt(tmp_Med_Filt);
+				//	/////*Implementierung 0: Die letzten MEDLEN Werte sind alle gleich.*/
+				//	////if (i == BUFLEN - MEDLEN){
+				//	////	for (k = 1; k < MEDLEN; k++){
+				//	////		envelope[i + k] = envelope[i];
+				//	////	}
+				//	////}
+				//	//testA[i] = envelope[i];					
+				//	//end
+				//}
 				/***%Hüllkurve abtasten*****************************************/
 
 				//	for i = 1:lenSig
@@ -312,6 +330,10 @@ int main(void) {
 				% 100ms, Logisch 0
 				% 200ms, Logisch 1*/
 				//if count_zero < 600 && count_zero > 50 && flag_absenkung == 0
+#ifdef SIMU
+				printf("minBufind= %d    count_zero= %d\n",minBufind, count_zero);
+#endif
+
 				if (count_zero < 600 && count_zero > 50 && flag_absenkung == 0){
 					//	disp('Null entdeckt');
 					//erg = [erg(:)',0];

@@ -65,6 +65,8 @@ working_buffer_pll_im = B_buffer_pll_im;
 %Buffer für den Entscheider
 sig_bin = zeros(block_laenge,1);
 
+bit_count = 0;
+
 %Schneide Eingangsvektor ab, sodass dieser ein Vielfaches der Blocklänge
 %ist
 len_sig_ges =  floor(len_sig_ges/block_laenge)*block_laenge;
@@ -101,7 +103,7 @@ plotindex8192=1:8192;
 num = 1;
 
 for iter=1:block_laenge:len_sig_ges
-    tic
+   % tic
 sig = sig_ges(iter:iter+block_laenge-1);
 lenSig=length(sig);
  %Handelt es sich gerade um das letzte Bit der aktuellen Sequenz und befindet sich der Signalausschnitt in der Absenkung     
@@ -208,18 +210,22 @@ end
 %564 entspricht, 600 schafft etwas Toleranz
 %                100ms, Logisch 0
 %                200ms, Logisch 1
+
+disp(['bit_count= ' num2str(bit_count) ' bit_count= ' num2str(count_zero)])
+
 if count_zero < 600 && count_zero > 50 && flag_absenkung == 0
-    disp('Null entdeckt');
+    %disp('Null entdeckt');
     erg=[erg(:)',0];
     %Bit erkannt, wieder auf Null setzen
     count_zero = 0;
 elseif (count_zero > 600 && flag_absenkung == 0)%200ms
-     disp('-- Eins entdeckt');
+     %disp('-- Eins entdeckt');
      erg=[erg(:)',1];
      %Bit erkannt, wieder auf Null setzen
     count_zero = 0;
 end
 
+bit_count = bit_count+1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Phasenrauschen bestimmen, geht nur im Modus mit Hilberfilter
 
@@ -265,7 +271,7 @@ end
       calc_phase_noise=0; 
      % pause
   end
-  toc
+ % toc
 end
   disp(length(erg));
  
