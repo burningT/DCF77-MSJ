@@ -131,9 +131,9 @@ len_median = 7;
 switch file
     case 'realData'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.8, block_laenge);
-        for k = 1 : length(sig_bin)-len_median 
-        sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
-        end
+         for k = 1 : length(sig_bin)-len_median 
+         sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
+         end
     case 'simu'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.2, block_laenge);
 end
@@ -218,14 +218,17 @@ if count_zero < 600 && count_zero > 50 && flag_absenkung == 0
     erg=[erg(:)',0];
     %Bit erkannt, wieder auf Null setzen
     count_zero = 0;
+    
+bit_count = bit_count+1;
 elseif (count_zero > 600 && flag_absenkung == 0)%200ms
      %disp('-- Eins entdeckt');
      erg=[erg(:)',1];
      %Bit erkannt, wieder auf Null setzen
     count_zero = 0;
+    
+bit_count = bit_count+1;
 end
 
-bit_count = bit_count+1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Phasenrauschen bestimmen, geht nur im Modus mit Hilberfilter
 
