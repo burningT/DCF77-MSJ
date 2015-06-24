@@ -20,10 +20,12 @@ float dcf77_loop_filter(float y, float *z, float alpha, float beta){	//TODO: wel
 	float up;
 	float down;
 
-	float coeffs[] = {beta, 1, 1};
+	//float coeffs[] = {beta, 1.0f, 1.0f};
 
-	up = IIR_DF1(coeffs, z, y);
-
+	//	up = IIR_DF1(coeffs, z, y);
+//	up = IIR_DF1(beta, z, y);
+	IIR_DF1(beta, z, y);
+	up = *z;
 	//[up, delay] = filter([beta], [1 - 1], y(k), z*);
 	down = y * alpha;
 	out = up + down;

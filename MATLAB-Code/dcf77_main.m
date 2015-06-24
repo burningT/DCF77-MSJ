@@ -153,7 +153,6 @@ for i=1:lenSig
         input_buffer_pll_re(ind_pll)= sig_I(i);
         input_buffer_pll_im(ind_pll)= sig_Q(i);
         
-        ind_pll = ind_pll+1;
         input_buffer_pll_flag=1;
         
         %Handelt es sich gerade um das letzte Bit der aktuellen Sequenz
@@ -168,7 +167,7 @@ for i=1:lenSig
         if input_buffer_pll_flag == 1
             input_buffer_pll_re(ind_pll)= sig_I(i);
             input_buffer_pll_im(ind_pll)= sig_Q(i);
-            ind_pll = ind_pll+1;
+            
         end
     end
     
@@ -187,6 +186,9 @@ for i=1:lenSig
         ind_pll=1;
         %Starten der Berechnung des Phasenrauschens.
         calc_phase_noise = 1;
+    end
+    if input_buffer_pll_flag == 1
+        ind_pll = ind_pll+1;
     end
 end
 

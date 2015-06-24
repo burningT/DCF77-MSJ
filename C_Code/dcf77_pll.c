@@ -14,7 +14,7 @@
 #include "dcf77_includes.h"
 extern Complex *pPLLWorkingBuffer;
 
-int dcf77_pll(float fs){
+int dcf77_pll(){
 
 	//general variables
 	int i;
@@ -28,13 +28,14 @@ int dcf77_pll(float fs){
 
 	//Parameters
 	float lf_alpha = 1;
-	float lf_beta = 1 / 100;
+	float lf_beta = 0.01f;
 	float vco_kv = 50;
-	float vco_wc = 2 * PI*fs / 4;
-	
+	float vco_wc = 2.0f * PI*FSAMP / 4.0f;
+	float Ts = 1.0f / FSAMP;
+
 	for (i = 0; i < N; i++){
 		pdOut = dcf77_phase_detector(pPLLWorkingBuffer[i].re, pPLLWorkingBuffer[i].im, vco_i, vco_q);
 		pPLLWorkingBuffer[i].re = dcf77_loop_filter(pdOut, z_lf, lf_alpha, lf_beta);
-		dcf77_vco(&vco_i, &vco_q, pPLLWorkingBuffer[i].re, 1 / fs, vco_wc, vco_kv, &z_vco);
+		dcf77_vco(&vco_i, &vco_q, pPLLWorkingBuffer[i].re, Ts, vco_wc, vco_kv, &z_vco);
 	}
 }

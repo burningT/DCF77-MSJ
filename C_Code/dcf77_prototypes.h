@@ -11,7 +11,7 @@ void dcf77_bit_decider_Complex(Complex sig[], float threshold, int lenSig);
 float dcf77_phase_detector(float Inp_I, float Inp_Q, float VCO_I, float VCO_Q);
 void dcf77_vco(float *vi_out, float *vq_out, float y, float ts, float wc, float kv, float *z);
 float dcf77_loop_filter(float y, float *z, float alpha, float beta);
-int dcf77_pll(float fs);
+int dcf77_pll();
 void dcf77_calcCorr(short iFFT[]);
 short dcf77_searchMax();
 
@@ -24,7 +24,7 @@ void cfftr2_dit(Complex* x, Complex* w, short n);
 void bitrev(Complex *xs, short *index, int n);
 void digitrev_index(short *index, int n, int radix);
 
-float IIR_DF1(float *num_envelope, float *T_IIR, float x_n);
+float IIR_DF1(float beta, float *T_IIR, float x_n);
 
 #ifdef SIMU
 unsigned int dcf77_readDataFromFile(short ** pCH, char fileName[]);

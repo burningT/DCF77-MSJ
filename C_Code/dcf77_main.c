@@ -151,6 +151,7 @@ int main(void) {
 	pInputBuffer = ABuffer;
 	pWorkingBuffer = BBuffer;
 
+	pPLLWorkingBuffer = PLLBuffer;
 	/* Twiddlekonstanten vorberechnen. Der Sinusterm muss positiv sein
 	Aufgrund der Implementierung des FFT Algorithmus von TI. Allgemein
 	müsste dieser Aufgrund der Formel negativ
@@ -300,7 +301,7 @@ int main(void) {
 						//input_buffer_pll_re = temp_re;
 						//input_buffer_pll_im = temp_im;
 						//%Befüllen des neuen InputBuffers vorbereiten.
-						ind_pll = 1;
+						ind_pll = 0;
 						//%Starten der Berechnung des Phasenrauschens.
 						calc_phase_noise = 1;
 						//end
@@ -361,7 +362,7 @@ int main(void) {
 					//if calc_phase_noise == 1 && strcmp(command, 'hilbert')
 				if (calc_phase_noise == 1 ){
 						//[working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im, Fs);
-					dcf77_pll(FSAMP);
+					dcf77_pll();
 						
 						//% Es müssen nur die ersten block_laenge Werte entschieden werden.Die
 						//%Ausgabe kann inplace erfolgen.
