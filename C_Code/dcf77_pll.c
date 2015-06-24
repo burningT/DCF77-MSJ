@@ -36,5 +36,7 @@ int dcf77_pll(float fs){
 		pdOut = dcf77_phase_detector(pPLLWorkingBuffer[i].re, pPLLWorkingBuffer[i].im, vco_i, vco_q);
 		pPLLWorkingBuffer[i].re = dcf77_loop_filter(pdOut, z_lf, lf_alpha, lf_beta);
 		dcf77_vco(&vco_i, &vco_q, pPLLWorkingBuffer[i].re, 1 / fs, vco_wc, vco_kv, &z_vco);
+
+		pPLLWorkingBuffer[i].im = 0f;		//Für Testzwecke
 	}
 }
