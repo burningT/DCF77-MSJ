@@ -16,9 +16,8 @@
 
 #include "dcf77_includes.h"
 
-void dcf77_bit_decider(float sig_bin[], float sig[], float threshold, int lenSig){	//TODO: welcher Datentyp wird erwartet?
+void dcf77_bit_decider(float sig_bin[], float sig[], float threshold, int lenSig){
 
-	//sig_bin = (short[LEN]){0};		//Initialisierung, damit sig_bin nicht ungewollt überschrieben werden kann
 	int i;									//Schleifenzähler
 
 	for (i = 0; i < lenSig; i++){
@@ -26,6 +25,19 @@ void dcf77_bit_decider(float sig_bin[], float sig[], float threshold, int lenSig
 			sig_bin[i] = 0;
 		else
 			sig_bin[i] = 1;
+	}
+	return;
+}
+
+void dcf77_bit_decider_Complex(Complex sig[], float threshold, int lenSig){
+
+	int i;									//Schleifenzähler
+
+	for (i = 0; i < lenSig; i++){
+		if (sig[i].re < threshold)
+			sig[i].re = 0;
+		else
+			sig[i].re = 1;
 	}
 	return;
 }

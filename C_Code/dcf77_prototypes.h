@@ -7,6 +7,7 @@ Die gesammelten Prototypen für die DCF77-Files der verwendeten Funktionen.
 
 void dcf77_bitdecoder(char dateTimeString[]);
 void dcf77_bit_decider(float sig_bin[], float sig[], float threshold, int lenSig);
+void dcf77_bit_decider_Complex(Complex sig[], float threshold, int lenSig);
 float dcf77_phase_detector(float Inp_I, float Inp_Q, float VCO_I, float VCO_Q);
 void dcf77_vco(float *vi_out, float *vq_out, float y, float ts, float wc, float kv, float *z);
 float dcf77_loop_filter(float y, float *z, float alpha, float beta);
