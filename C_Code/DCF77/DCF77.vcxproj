@@ -24,16 +24,21 @@
     <ClCompile Include="..\dcf77_bit_decider.c" />
     <ClCompile Include="..\dcf77_calcCorr.c" />
     <ClCompile Include="..\dcf77_dataAcquisition.c" />
+    <ClCompile Include="..\dcf77_loop_filter.c" />
     <ClCompile Include="..\dcf77_main.c" />
     <ClCompile Include="..\dcf77_medFilt.c" />
+    <ClCompile Include="..\dcf77_phase_detector.c" />
+    <ClCompile Include="..\dcf77_pll.c" />
     <ClCompile Include="..\dcf77_readDataFromFile.c" />
     <ClCompile Include="..\dcf77_sortBub.c" />
     <ClCompile Include="..\dcf77_sshortToFloat.c" />
     <ClCompile Include="..\dcf77_swapCompPoint.c" />
+    <ClCompile Include="..\dcf77_vco.c" />
     <ClCompile Include="..\dcf77_writeDataToFile.c" />
     <ClCompile Include="..\digitrev_index.c" />
     <ClCompile Include="..\fftSimu.c" />
     <ClCompile Include="..\FIR_filter_ANSI_C_float.c" />
+    <ClCompile Include="..\IIR_DF1.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F1BA45CE-2DF3-472C-ABFB-6A5AD1FDC742}</ProjectGuid>

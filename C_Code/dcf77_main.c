@@ -188,7 +188,7 @@ int main(void) {
 			/*Kopiere eingelesene Daten in Buffer. Auf der Hardware	passiert dies im Interrupt.*/
 			dcf77_dataAcquisition(&dataIndex, pDataXn, lineCountXn);
 #endif
-
+			flag_absenkung = 0;
 			///////////////////////////////////////////////////////////////
 			/* Buffer voll? Starte Berechnungen*/
 			if (startCalc == 1) {
@@ -260,7 +260,7 @@ int main(void) {
 						input_buffer_pll_flag = 1;
 
 						//%Handelt es sich gerade um das letzte Bit der aktuellen Sequenz
-						if (i == BUFLEN){
+						if (i == BUFLEN-1){
 							flag_absenkung = 1;
 						}
 					}
@@ -354,6 +354,52 @@ int main(void) {
 				}
 
 				/**% Phasenrauschen bestimmen**********************************/
+					//if calc_phase_noise == 1 && strcmp(command, 'hilbert')
+				if (calc_phase_noise == 1 ){
+						//[working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im, Fs);
+					//[working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im, Fs);
+						//%        figure, plot(working_buffer_pll_re)
+						//% Es müssen nur die ersten block_laenge Werte entschieden werden.Die
+						//%Ausgabe kann inplace erfolgen.
+						//working_buffer_pll_rePLOT = dcf77_bit_decider(working_buffer_pll_re, working_buffer_pll_re, 0.0, block_laenge);
+
+						//%%%Suche Begin Phasenrauschen.
+						//% Dies beginnt bei Sample 1088, dies entspricht 200ms bei der
+						//% verwendeten ABtastfrequenz 200ms * 1Sample / (1 / Fs) = 1088
+						//phase_noise_window = 1088;
+
+						//if (strcmp(option, 'plot'))
+						//figure, plot(plotindex8192, working_buffer_pll_re, plotindex8192, working_buffer_pll_rePLOT), title('working_buffer_pll_re')
+						//end
+						//working_buffer_pll_re = working_buffer_pll_rePLOT;
+
+//						p_out = dcf77_bit_sequence_fitted(Fs);
+
+
+	//					corrErg = xcorr(working_buffer_pll_re(phase_noise_window + 1:block_laenge) * 2 - 1, p_out(1:block_laenge - phase_noise_window) * 2 - 1);
+		//				if (strcmp(option, 'plot'))
+			//			figure, plot(abs(corrErg)), title('corrErg')
+						//figure, plot(plotindex4096(1:block_laenge - phase_noise_window), working_buffer_pll_re(phase_noise_window + 1:block_laenge) * 2 - 1 + 0.5, ...
+						//plotindex4096(1:block_laenge - phase_noise_window), (p_out(1:block_laenge - phase_noise_window) * 2 - 1)), title('corr Bitfolgen')
+						//end
+
+						//% Maximum der KKF bestimmen.
+						//[T_v_value, T_v_index] = max(abs(corrErg));
+						//corr_length = length(corrErg);
+						//%Mittelpunkt
+						//corr_mid = (corr_length - 1) / 2;
+						//%Abweichung bestimmen und Delay vom Median Filter abziehen.
+						//diff_sample_count(num) = abs(T_v_index - corr_mid) - floor(len_median / 2) - 1;
+						//diff_time(num) = diff_sample_count(num)*(1 / Fs);
+
+						//num = num + 1;
+
+						//%Null Setzten, um neu zu befüllen.
+						//calc_phase_noise = 0;
+						//% pause
+						//end*/
+
+				}
 				/** % Maximum der KKF bestimmen.*****************************************************/
 				/*******************************************************/
 				/*******************************************************/

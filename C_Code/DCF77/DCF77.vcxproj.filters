@@ -80,5 +80,20 @@
     <ClCompile Include="..\dcf77_sortBub.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\dcf77_pll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_loop_filter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_phase_detector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dcf77_vco.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IIR_DF1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
