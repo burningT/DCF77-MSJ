@@ -95,5 +95,8 @@
     <ClCompile Include="..\IIR_DF1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\dcf77_searchMax.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

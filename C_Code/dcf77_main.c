@@ -8,6 +8,8 @@ digitalen Signalprozessor. Top-Level-Funktion.
 #include "dcf77_includes.h"
 /*Hilbert Filter*/
 #include "dcf77_hilbert.h"
+/*Bit Sequence zum Korrelieren einbinden*/
+#include "dcf77_bit_sequence_fitted.h"
 
 /* Globale Variablen*/
 /* Zeigt auf den aktuellen Buffer indem Berechnungen durchgeführt werden sollen */
@@ -170,7 +172,9 @@ int main(void) {
 		hilbert_real[i] = 0;
 	}
 	hilbert_real[i] = 1;
-
+	for (i = 0; i < N; i++){
+		CorrSig[i].re = (float)dcf77_bit_sequence[i];
+	}
 #ifdef HARDWARE
 	/* Starte Interrupts. */
 	IER |= 2;
@@ -357,34 +361,25 @@ int main(void) {
 					//if calc_phase_noise == 1 && strcmp(command, 'hilbert')
 				if (calc_phase_noise == 1 ){
 						//[working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im, Fs);
-					//[working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im, Fs);
-						//%        figure, plot(working_buffer_pll_re)
+					dcf77_pll(FSAMP);
+						
 						//% Es müssen nur die ersten block_laenge Werte entschieden werden.Die
 						//%Ausgabe kann inplace erfolgen.
 						//working_buffer_pll_rePLOT = dcf77_bit_decider(working_buffer_pll_re, working_buffer_pll_re, 0.0, block_laenge);
+						dcf77_bit_decider_Complex(PLLBuffer, 0.0f, BUFLEN);						
 
-						//%%%Suche Begin Phasenrauschen.
-						//% Dies beginnt bei Sample 1088, dies entspricht 200ms bei der
-						//% verwendeten ABtastfrequenz 200ms * 1Sample / (1 / Fs) = 1088
-						//phase_noise_window = 1088;
-
-						//if (strcmp(option, 'plot'))
-						//figure, plot(plotindex8192, working_buffer_pll_re, plotindex8192, working_buffer_pll_rePLOT), title('working_buffer_pll_re')
-						//end
-						//working_buffer_pll_re = working_buffer_pll_rePLOT;
-
+						
 //						p_out = dcf77_bit_sequence_fitted(Fs);
 
-
+						dcf77_calcCorr(iFFT);
 	//					corrErg = xcorr(working_buffer_pll_re(phase_noise_window + 1:block_laenge) * 2 - 1, p_out(1:block_laenge - phase_noise_window) * 2 - 1);
-		//				if (strcmp(option, 'plot'))
-			//			figure, plot(abs(corrErg)), title('corrErg')
-						//figure, plot(plotindex4096(1:block_laenge - phase_noise_window), working_buffer_pll_re(phase_noise_window + 1:block_laenge) * 2 - 1 + 0.5, ...
-						//plotindex4096(1:block_laenge - phase_noise_window), (p_out(1:block_laenge - phase_noise_window) * 2 - 1)), title('corr Bitfolgen')
-						//end
+		//				
 
 						//% Maximum der KKF bestimmen.
 						//[T_v_value, T_v_index] = max(abs(corrErg));
+						corrErg[iCorrErg] = dcf77_searchMax();
+						iCorrErg++;
+
 						//corr_length = length(corrErg);
 						//%Mittelpunkt
 						//corr_mid = (corr_length - 1) / 2;
@@ -395,7 +390,7 @@ int main(void) {
 						//num = num + 1;
 
 						//%Null Setzten, um neu zu befüllen.
-						//calc_phase_noise = 0;
+						calc_phase_noise = 0;
 						//% pause
 						//end*/
 

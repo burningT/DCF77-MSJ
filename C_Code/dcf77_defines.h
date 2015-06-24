@@ -45,4 +45,7 @@ entspricht der Größe der Buffer zum halten der Daten.*/
 #define AMPLIFIE 8
 /* Median Filter Länge*/
 #define MEDLEN 7
+/*Suche Begin Phasenrauschen. Dies beginnt bei Sample 1088, dies entspricht 200ms bei der 
+verwendeten ABtastfrequenz 200ms * 1Sample / (1 / Fs) = 1088*/
+#define PHASE_NOISE_WINDOW 1088
 #endif /* DCF77_DEFINES_H_ */

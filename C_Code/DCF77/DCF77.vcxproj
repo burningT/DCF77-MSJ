@@ -30,6 +30,7 @@
     <ClCompile Include="..\dcf77_phase_detector.c" />
     <ClCompile Include="..\dcf77_pll.c" />
     <ClCompile Include="..\dcf77_readDataFromFile.c" />
+    <ClCompile Include="..\dcf77_searchMax.c" />
     <ClCompile Include="..\dcf77_sortBub.c" />
     <ClCompile Include="..\dcf77_sshortToFloat.c" />
     <ClCompile Include="..\dcf77_swapCompPoint.c" />

@@ -12,6 +12,8 @@ float dcf77_phase_detector(float Inp_I, float Inp_Q, float VCO_I, float VCO_Q);
 void dcf77_vco(float *vi_out, float *vq_out, float y, float ts, float wc, float kv, float *z);
 float dcf77_loop_filter(float y, float *z, float alpha, float beta);
 int dcf77_pll(float fs);
+void dcf77_calcCorr(short iFFT[]);
+short dcf77_searchMax();
 
 void dcf77_swapCompPoint(Complex ** a, Complex ** b);
 float dcf77_medFilt(float * input);

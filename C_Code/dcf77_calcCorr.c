@@ -13,7 +13,7 @@ extern Complex w[N / RADIX];
 
 extern Complex CorrSig[N];
 
-void calcCorr(short iFFT []){
+void dcf77_calcCorr(short iFFT []){
 	int i=0;
 	/*Pointer auf corrSig*/
 	Complex * pCorrSig = CorrSig;
