@@ -44,10 +44,8 @@ end
 len_sig_ges = length(sig_ges);
 %block_laenge = 4096;
 buffer_pll_len = 2*block_laenge;
-A_buffer_pll_re = zeros(buffer_pll_len,1);
-B_buffer_pll_re = zeros(buffer_pll_len,1);
-A_buffer_pll_im = zeros(buffer_pll_len,1);
-B_buffer_pll_im = zeros(buffer_pll_len,1);
+buffer_pll_re = zeros(buffer_pll_len,1);
+buffer_pll_im = zeros(buffer_pll_len,1);
 %Index für die Befüllung des Buffers der PLL. Matlab Indizierung startet
 %bei 1!
 ind_pll=1;
@@ -55,12 +53,6 @@ ind_pll=1;
 input_buffer_pll_flag=0;
 %Startet die Berechnung des Phasenrauschens.
 calc_phase_noise=0;
-
-% In C sind Input.. und Working.. Pointer vom Datentyp Complex.
-input_buffer_pll_re = A_buffer_pll_re;
-input_buffer_pll_im = A_buffer_pll_im;
-working_buffer_pll_re = B_buffer_pll_re;
-working_buffer_pll_im = B_buffer_pll_im;
 
 %Buffer für den Entscheider
 sig_bin = zeros(block_laenge,1);
@@ -131,9 +123,9 @@ len_median = 7;
 switch file
     case 'realData'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.8, block_laenge);
-         for k = 1 : length(sig_bin)-len_median 
-         sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
-         end
+%          for k = 1 : length(sig_bin)-len_median 
+%          sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
+%          end
     case 'simu'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.2, block_laenge);
 end
@@ -150,8 +142,8 @@ for i=1:lenSig
         count_min = 0;
         %Der Buffer für die PLL wird bereits mit Beginn der Absenkung befüllt, so
         %hat die PLL etwas Zeit sich einzuschwingen.
-        input_buffer_pll_re(ind_pll)= sig_I(i);
-        input_buffer_pll_im(ind_pll)= sig_Q(i);
+        buffer_pll_re(ind_pll)= sig_I(i);
+        buffer_pll_im(ind_pll)= sig_Q(i);
         
         input_buffer_pll_flag=1;
         
@@ -165,8 +157,8 @@ for i=1:lenSig
         %fortgesetzt werden, sobald die ABsenkung vorbei ist und das
         %Phasenrauschen beginnt.
         if input_buffer_pll_flag == 1
-            input_buffer_pll_re(ind_pll)= sig_I(i);
-            input_buffer_pll_im(ind_pll)= sig_Q(i);
+            buffer_pll_re(ind_pll)= sig_I(i);
+            buffer_pll_im(ind_pll)= sig_Q(i);
             
         end
     end
@@ -174,14 +166,7 @@ for i=1:lenSig
     %Sobald der input_buffer_pll voll ist, muss die Befüllung gestoppt
     %werden.
     if ind_pll == buffer_pll_len/2
-        input_buffer_pll_flag=0;
-        %Working und Inputbuffer wechseln.
-        temp_re = working_buffer_pll_re;
-        temp_im = working_buffer_pll_im;
-        working_buffer_pll_re = input_buffer_pll_re;  
-        working_buffer_pll_im = input_buffer_pll_im; 
-        input_buffer_pll_re = temp_re;
-        input_buffer_pll_im = temp_im;        
+        input_buffer_pll_flag=0;      
         %Befüllen des neuen InputBuffers vorbereiten.
         ind_pll=1;
         %Starten der Berechnung des Phasenrauschens.
@@ -235,11 +220,11 @@ end
 % Phasenrauschen bestimmen, geht nur im Modus mit Hilberfilter
 
   if calc_phase_noise == 1 && strcmp(command,'hilbert')
-     [working_buffer_pll_re] = dcf77_pll(working_buffer_pll_re, working_buffer_pll_im,Fs);
-%        figure,plot(working_buffer_pll_re)
+     [buffer_pll_re] = dcf77_pll(buffer_pll_re, buffer_pll_im,Fs);
+%        figure,plot(buffer_pll_re)
        %Es müssen nur die ersten block_laenge Werte entschieden werden. Die
        %Ausgabe kann inplace erfolgen.
-      working_buffer_pll_rePLOT = dcf77_bit_decider(working_buffer_pll_re,working_buffer_pll_re,0.0,block_laenge); 
+      buffer_pll_rePLOT = dcf77_bit_decider(buffer_pll_re,buffer_pll_re,0.0,block_laenge); 
       
       %%%Suche Begin Phasenrauschen.
       % Dies beginnt bei Sample 1088, dies entspricht 200ms bei der
@@ -247,17 +232,17 @@ end
       phase_noise_window=1088;
       
       if(strcmp(option,'plot'))
-        figure,plot(plotindex8192,working_buffer_pll_re,plotindex8192,working_buffer_pll_rePLOT),title('working_buffer_pll_re')
+        figure,plot(plotindex8192,buffer_pll_re,plotindex8192,buffer_pll_rePLOT),title('buffer_pll_re')
       end
-        working_buffer_pll_re=working_buffer_pll_rePLOT;
+        buffer_pll_re=buffer_pll_rePLOT;
       
         p_out=dcf77_bit_sequence_fitted( Fs);
         
          
-        corrErg=xcorr(working_buffer_pll_re(phase_noise_window+1:block_laenge)*2-1,p_out(1:block_laenge-phase_noise_window)*2-1);
+        corrErg=xcorr(buffer_pll_re(phase_noise_window+1:block_laenge)*2-1,p_out(1:block_laenge-phase_noise_window)*2-1);
         if(strcmp(option,'plot'))
         figure,plot(abs(corrErg)),title('corrErg')
-        figure,plot(plotindex4096(1:block_laenge-phase_noise_window),working_buffer_pll_re(phase_noise_window+1:block_laenge)*2-1+0.5,...
+        figure,plot(plotindex4096(1:block_laenge-phase_noise_window),buffer_pll_re(phase_noise_window+1:block_laenge)*2-1+0.5,...
         plotindex4096(1:block_laenge-phase_noise_window),(p_out(1:block_laenge-phase_noise_window)*2-1)),title('corr Bitfolgen')
         end
         
