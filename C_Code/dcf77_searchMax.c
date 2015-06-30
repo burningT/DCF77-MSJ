@@ -5,7 +5,7 @@ Rückgabewert:
 Der berechnete Index des Maximums.
 */
 #include "dcf77_includes.h"
-extern Complex * pWorkingBuffer;
+extern Complex * pPLLWorkingBuffer;
 short dcf77_searchMax(){
 	short i=0;
 	short iMax=0;
@@ -16,8 +16,8 @@ short dcf77_searchMax(){
 	einer Korrelation basierend auf der linearen	Faltung. Dies entspricht
 	der Grenze <N-1. Innerhalb dieser Grenzen wird das Maximum gesucht.*/
 	for(i=0;i<N-1;i++){
-		if(valueMax < abs(pWorkingBuffer[i].re)){
-			valueMax = abs(pWorkingBuffer[i].re);
+		if(valueMax < abs(pPLLWorkingBuffer[i].re)){
+			valueMax = abs(pPLLWorkingBuffer[i].re);
 			iMax = i;
 		}
 	}

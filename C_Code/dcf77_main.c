@@ -225,26 +225,26 @@ int main(void) {
 				dcf77_bit_decider(envelope, envelope, 0.8, BUFLEN);
 
 				//for k = 1 : length(sig_bin) - len_median
-				for (i = 0; i <= BUFLEN - MEDLEN; i++){
+				//for (i = 0; i <= BUFLEN - MEDLEN; i++){
 
-					/*Kopiere Werte vor dem sortieren in ein Zwischenarray. Ansonsten wird
-					beim nächsten berechneten Geschwindigkeitswert, nicht der älteste,
-					sondern der Größte entfernt. Weil das Array sortiert bleibt, da Call
-					by Reference.*/
-					for (k = 0; k < MEDLEN; k++){
-						tmp_Med_Filt[k] = envelope[i+k];
-					}
-					/*tmp_Med_Filt ist mit MEDLEN Werten gefüllt*/
-					envelope[i] = dcf77_medFilt(tmp_Med_Filt);
-					/////*Implementierung 0: Die letzten MEDLEN Werte sind alle gleich.*/
-					////if (i == BUFLEN - MEDLEN){
-					////	for (k = 1; k < MEDLEN; k++){
-					////		envelope[i + k] = envelope[i];
-					////	}
-					////}
-					//testA[i] = envelope[i];					
-					//end
-				}
+				//	/*Kopiere Werte vor dem sortieren in ein Zwischenarray. Ansonsten wird
+				//	beim nächsten berechneten Geschwindigkeitswert, nicht der älteste,
+				//	sondern der Größte entfernt. Weil das Array sortiert bleibt, da Call
+				//	by Reference.*/
+				//	for (k = 0; k < MEDLEN; k++){
+				//		tmp_Med_Filt[k] = envelope[i+k];
+				//	}
+				//	/*tmp_Med_Filt ist mit MEDLEN Werten gefüllt*/
+				//	envelope[i] = dcf77_medFilt(tmp_Med_Filt);
+				//	/////*Implementierung 0: Die letzten MEDLEN Werte sind alle gleich.*/
+				//	////if (i == BUFLEN - MEDLEN){
+				//	////	for (k = 1; k < MEDLEN; k++){
+				//	////		envelope[i + k] = envelope[i];
+				//	////	}
+				//	////}
+				//	//testA[i] = envelope[i];					
+				//	//end
+				//}
 				/***%Hüllkurve abtasten*****************************************/
 
 				//	for i = 1:lenSig
@@ -293,13 +293,6 @@ int main(void) {
 					if (ind_pll == N / 2){
 						//if ind_pll == buffer_pll_len / 2
 						input_buffer_pll_flag = 0;
-						//%Working und Inputbuffer wechseln.
-						//	temp_re = working_buffer_pll_re;
-						//temp_im = working_buffer_pll_im;
-						//working_buffer_pll_re = input_buffer_pll_re;
-						//working_buffer_pll_im = input_buffer_pll_im;
-						//input_buffer_pll_re = temp_re;
-						//input_buffer_pll_im = temp_im;
 						//%Befüllen des neuen InputBuffers vorbereiten.
 						ind_pll = 0;
 						//%Starten der Berechnung des Phasenrauschens.
@@ -375,7 +368,7 @@ int main(void) {
 						dcf77_calcCorr(iFFT);
 	//					corrErg = xcorr(working_buffer_pll_re(phase_noise_window + 1:block_laenge) * 2 - 1, p_out(1:block_laenge - phase_noise_window) * 2 - 1);
 		//				
-
+						/*******************************************************/
 						//% Maximum der KKF bestimmen.
 						//[T_v_value, T_v_index] = max(abs(corrErg));
 						corrErg[iCorrErg] = dcf77_searchMax();
@@ -396,15 +389,7 @@ int main(void) {
 						//end*/
 
 				}
-				/** % Maximum der KKF bestimmen.*****************************************************/
-				/*******************************************************/
-				/*******************************************************/
-				/////////////////////////////////////////////////////////////
-
-
-
-
-
+				
 
 #ifdef INCLUDEDATA						
 				/* Vergleiche Korrelationsergebnisse.*/
