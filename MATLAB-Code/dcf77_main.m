@@ -131,15 +131,11 @@ len_median = 7;
 switch file
     case 'realData'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.8, block_laenge);
-<<<<<<< HEAD
+
           for k = 1 : length(sig_bin)-len_median 
           sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median-1),len_median);
           end
-=======
-         for k = 1 : length(sig_bin)-len_median 
-         sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
-         end
->>>>>>> parent of 12f0f0f... Matlab WorkingBuffer entfernt
+
     case 'simu'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.2, block_laenge);
 end
