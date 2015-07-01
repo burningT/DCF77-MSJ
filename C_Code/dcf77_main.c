@@ -89,7 +89,7 @@ short iTwid[N / RADIX];
 short iFFT[N];
 
 /*Temporäres Array für das Median Filter*/
-float tmp_Med_Filt[MEDLEN+1];
+float tmp_Med_Filt[MEDLEN];
 /*Zählvariable zum Befüllen des tmp_Med_Filt*/
 short k = 0;
 
@@ -225,13 +225,13 @@ int main(void) {
 				dcf77_bit_decider(envelope, envelope, 0.8, BUFLEN);
 
 				//for k = 1 : length(sig_bin) - len_median
-				for (k = 0; k < BUFLEN - MEDLEN; k++){
+				for (k = 0; k <= BUFLEN - MEDLEN; k++){
 
 					/*Kopiere Werte vor dem sortieren in ein Zwischenarray. Ansonsten wird
 					beim nächsten berechneten Geschwindigkeitswert, nicht der älteste,
 					sondern der Größte entfernt. Weil das Array sortiert bleibt, da Call
 					by Reference.*/
-					for (i = 0; i <= MEDLEN; i++){
+					for (i = 0; i < MEDLEN; i++){
 						tmp_Med_Filt[i] = envelope[i+k];
 					}
 					/*tmp_Med_Filt ist mit MEDLEN Werten gefüllt*/

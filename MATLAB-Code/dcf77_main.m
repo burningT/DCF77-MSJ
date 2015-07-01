@@ -124,7 +124,7 @@ switch file
     case 'realData'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.8, block_laenge);
           for k = 1 : length(sig_bin)-len_median 
-          sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median),len_median);
+          sig_bin(k) = dcf77_MedFilt(sig_bin(k:k+len_median-1),len_median);
           end
     case 'simu'
         sig_bin = dcf77_bit_decider(sig_bin, sig, 0.2, block_laenge);
